@@ -44,7 +44,7 @@ public class Dictionary extends HttpServlet {
 				dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				NodeList ndlist=doc.getChildNodes();
+				NodeList ndlist=doc.getElementsByTagName("word");
 				PrintWriter out=response.getWriter();
 				
 				while(i<ndlist.getLength()) {
