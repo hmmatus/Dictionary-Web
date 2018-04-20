@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<dictionary>
+	<word>
+		<name>Carro</name> 
+		<description>Vehiculo</description>
+	</word>
+	<word>
+		<name>Caballo</name> 
+		<description>Animal</description>
+	</word>
+	<word>
+		<name>Jugo</name> 
+		<description>Bebida</description>
+	</word>
+</dictionary>
