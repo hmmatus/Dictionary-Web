@@ -38,39 +38,49 @@ public class Dictionary extends HttpServlet {
 			DocumentBuilder dBuilder;
 			int answer=0;
 			boolean flag=false;
+			int i=0;
+			String name=request.getParameter("name");
 			try {
 				dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				NodeList ndlist=doc.getElementsByTagName("word");
-				String name=request.getParameter("name");
+				NodeList ndlist=doc.getChildNodes();
 				PrintWriter out=response.getWriter();
-				int i=0;
 				
 				while(i<ndlist.getLength()) {
 					Node nNode=ndlist.item(i);
-					Element element=(Element) nNode;
-					/*if(element.getElementsByTagName("name").item(i).getTextContent().toString().equals(name)) {
-						answer=i;
-						flag=true;
-						break;
-					}*/	
+					if(nNode.getNodeType()==Node.ELEMENT_NODE) {
+						Element element=(Element) nNode;
+						if(element.getElementsByTagName("name").item(0).getTextContent().equals(name)) {
+							answer=i;
+							flag=true;
+							break;
+						}
+					}
 					i++;
 				}
-				if(flag!=true) {
+				if(flag==true) {
 					Node nNodex=ndlist.item(answer);
 					Element elementx=(Element) nNodex;
 					out.println("<html>");
 					out.print("<body>");
-					out.println("<b>Name:"+elementx.getElementsByTagName("name").item(answer).getTextContent().toString()+"</b>");
-					out.println("<b>Description:"+elementx.getElementsByTagName("description").item(answer).getTextContent().toString()+"</b>");
+					//out.println("<b>"+name+"</b>");
+					out.println("<b>Name:"+elementx.getElementsByTagName("name").item(0).getTextContent().toString()+"</b>");
+					out.println("<b>Description:"+elementx.getElementsByTagName("description").item(0).getTextContent().toString()+"</b>");
+					out.print("<form action=\"index.jsp\">");
+					out.print("<input type=\"Submit\">");
 					out.print("<body>");
 					out.println("<html>");
 				}
 				else{
+					Node nNodex=ndlist.item(1);
+					Element elementx=(Element) nNodex;
 					out.println("<html>");
 					out.print("<body>");
 					out.println("<b>RIP</b>");
+					out.println("<b>"+ndlist.getLength()+"</b>");
+					out.print("<form action=\"index.jsp\">");
+					out.print("<input type=\"Submit\">");
 					out.print("<body>");
 					out.println("<html>");
 				}
